@@ -17,7 +17,7 @@
 #
 # Everything in this directory will become public
 
-COMMON_FOLDER := device/sd/common
+COMMON_FOLDER := device/sd/sd-common
 
 # set to allow building from omap4-common
 BOARD_VENDOR := sd
