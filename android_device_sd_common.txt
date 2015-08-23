@@ -1,2 +1,0 @@
-здесь была папка:
-android_device_sd_common
