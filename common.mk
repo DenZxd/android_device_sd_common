@@ -23,7 +23,7 @@ COMMON_FOLDER := device/sd/sd-common
 BOARD_VENDOR := sd
 
 # Setup custom omap4xxx defines
-BOARD_USE_CUSTOM_LIBION := true
+#BOARD_USE_CUSTOM_LIBION := true
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := $(DEVICE_FOLDER)/kernel
@@ -141,12 +141,11 @@ PRODUCT_COPY_FILES += \
 # Input
 PRODUCT_COPY_FILES += \
     $(COMMON_FOLDER)/prebuilt/usr/idc/ft5x0x_ts.idc:system/usr/idc/ft5x0x_ts.idc \
-    $(COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl\
-    $(COMMON_FOLDER)/prebuilt/usr/keylayout/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl
-
+    $(COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
+    $(COMMON_FOLDER)/prebuilt/usr/keylayout/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
 
 # USB Host app switcher
-#PRODUCT_PACKAGES += USBHostSwitcher
+PRODUCT_PACKAGES += USBHostSwitcher
 
 # TI OMAP4
 PRODUCT_PACKAGES += \
@@ -167,8 +166,8 @@ PRODUCT_PACKAGES += \
     libomxcameraadapter \
     smc_pa_ctrl \
     tf_daemon \
-    libtf_crypto_sst
-#   libOMX.TI.DUCATI1.VIDEO.CAMERA \
+    libtf_crypto_sst \
+    libOMX.TI.DUCATI1.VIDEO.CAMERA \
 
 # Standard CM stuff.
 PRODUCT_PACKAGES += \
