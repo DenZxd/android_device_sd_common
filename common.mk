@@ -35,8 +35,12 @@ endif
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/tablet_core_hardware.xml:system/etc/permissions/tablet_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
-    frameworks/native/data/etc/android.hardware.camera.autofocus.xml:system/etc/permissions/android.hardware.camera.autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
+    frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
+    frameworks/native/data/etc/android.hardware.ethernet.xml:system/etc/permissions/android.hardware.ethernet.xml \
     frameworks/native/data/etc/android.hardware.location.gps.xml:system/etc/permissions/android.hardware.location.gps.xml \
+    frameworks/native/data/etc/android.hardware.telephony.cdma.xml:system/etc/permissions/android.hardware.telephony.cdma.xml \
+    frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:system/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:system/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.sensor.accelerometer.xml:system/etc/permissions/android.hardware.sensor.accelerometer.xml \
@@ -44,7 +48,8 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
     frameworks/native/data/etc/android.hardware.sensor.proximity.xml:system/etc/permissions/android.hardware.sensor.proximity.xml \
-    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.distinct.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.distinct.xml \
+    hardware/ti/wpan/tools/FM/FmRadioIf/com.ti.fm.fmradioif.xml:system/etc/permissions/com.ti.fm.fmradioif.xml \
+    frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
@@ -191,5 +196,34 @@ PRODUCT_COPY_FILES += \
 # Art
 PRODUCT_COPY_FILES += \
     $(COMMON_FOLDER)/prebuilt/poetry/poem.txt:root/sbin/poem.txt
+    
+
+#TI_WPAN
+PRODUCT_PACKAGES += uim-sysfs \
+	bt_sco_app \
+	kfmapp     \
+        BluetoothSCOApp \
+        FmRxApp \
+        FmTxApp \
+        FmService \
+        libfmradio \
+        fmradioif \
+        com.ti.fm.fmradioif.xml \
+        libbt-vendor
+
+#copy firmware
+PRODUCT_COPY_FILES += \
+  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_10.6.15.bts:system/etc/firmware/TIInit_10.6.15.bts \
+  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.2.31.bts:system/etc/firmware/TIInit_7.2.31.bts \
+  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.6.15.bts:system/etc/firmware/TIInit_7.6.15.bts \
+  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_12.7.27.bts:system/etc/firmware/TIInit_12.7.27.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_ch8_1283.2.bts:system/etc/firmware/fmc_ch8_1283.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_ch8_1283.2.bts:system/etc/firmware/fm_rx_ch8_1283.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1283.2.bts:system/etc/firmware/fm_tx_ch8_1283.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_init_1273.2.bts:system/etc/firmware/fmc_init_1273.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_init_1273.2.bts:system/etc/firmware/fm_rx_init_1273.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_init_1273.2.bts:system/etc/firmware/fm_tx_init_1273.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.1.bts:system/etc/firmware/fm_tx_ch8_1273.1.bts \
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts
 
 $(call inherit-product-if-exists, vendor/sd/omap4470-common/omap4470-common-vendor.mk)
