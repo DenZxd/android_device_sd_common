@@ -92,13 +92,15 @@ PRODUCT_PACKAGES += \
     dhcpcd.conf \
     lib_driver_cmd_wl12xx \
     TQS_D_1.7.ini \
-    calibrator
+    calibrator \
+    hostapd.conf \
+    
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
     sdcard \
-    setup_fs
+    setup_fs \
 
 # Audio Support
 PRODUCT_PACKAGES += \
@@ -109,7 +111,12 @@ PRODUCT_PACKAGES += \
     tinycap \
     audio_policy.default \
     audio.a2dp.default \
-    audio.usb.default
+    audio.usb.default \
+    audio.hdmi.omap4 \
+    audio.r_submix.default \
+    audio.primary.omap4 \
+    camera.omap4 \
+    gps.omap4 \
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -209,7 +216,7 @@ PRODUCT_PACKAGES += uim-sysfs \
         libfmradio \
         fmradioif \
         com.ti.fm.fmradioif.xml \
-        libbt-vendor
+        libbt-vendor \
 
 #copy firmware
 PRODUCT_COPY_FILES += \
@@ -224,6 +231,6 @@ PRODUCT_COPY_FILES += \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_init_1273.2.bts:system/etc/firmware/fm_rx_init_1273.2.bts \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_init_1273.2.bts:system/etc/firmware/fm_tx_init_1273.2.bts \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.1.bts:system/etc/firmware/fm_tx_ch8_1273.1.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts
+  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts \
 
 $(call inherit-product-if-exists, vendor/sd/omap4470-common/omap4470-common-vendor.mk)
