@@ -19,9 +19,9 @@ COMMON_FOLDER := device/sd/sd-common
 # set to allow building from omap4-common
 BOARD_VENDOR := sd
 
-#PRODUCT_VENDOR_KERNEL_HEADERS := $(COMMON_FOLDER)/kernel-headers
+PRODUCT_VENDOR_KERNEL_HEADERS := $(COMMON_FOLDER)/kernel-headers
 
-#TARGET_SPECIFIC_HEADER_PATH := $(COMMON_FOLDER)/include
+TARGET_SPECIFIC_HEADER_PATH := $(COMMON_FOLDER)/include
 
 USE_CAMERA_STUB := true
 BOARD_HAVE_FAKE_GPS := false
