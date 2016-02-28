@@ -188,13 +188,13 @@ PRODUCT_PACKAGES += \
 
 # Hardware HALs
 PRODUCT_PACKAGES += \
-    hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
     lights.$(TARGET_BOOTLOADER_BOARD_NAME) \
     power.$(TARGET_BOOTLOADER_BOARD_NAME) \
     audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME) \
     sensors.$(TARGET_BOOTLOADER_BOARD_NAME) \
-    audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME)
-
+    audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#    hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
+    
 # Clears the boot counter, update mac address on first start
 PRODUCT_COPY_FILES += \
         $(COMMON_FOLDER)/prebuilt/bin/clear_bootcnt.sh:/system/bin/clear_bootcnt.sh \
