@@ -153,6 +153,7 @@ PRODUCT_COPY_FILES += \
 # Input
 PRODUCT_COPY_FILES += \
     $(COMMON_FOLDER)/prebuilt/usr/idc/ft5x0x_ts.idc:system/usr/idc/ft5x0x_ts.idc \
+    $(COMMON_FOLDER)/prebuilt/usr/idc/gpio-keys.idc:system/usr/idc/gpio-keys.idc \
     $(COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
     $(COMMON_FOLDER)/prebuilt/usr/keylayout/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
 
@@ -232,5 +233,8 @@ PRODUCT_COPY_FILES += \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_init_1273.2.bts:system/etc/firmware/fm_tx_init_1273.2.bts \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.1.bts:system/etc/firmware/fm_tx_ch8_1273.1.bts \
   device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts \
+  device/ti/proprietary-open/wl12xx/wpan/nfc/TIInit_11.7.27.bts:system/etc/firmware/TIInit_11.7.27.bts \
+  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.72.bts:system/etc/firmware/TINfcInit_12.8.32.72.bts \
+  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.80.bts:system/etc/firmware/TINfcInit_12.8.32.80.bts \
 
 $(call inherit-product-if-exists, vendor/sd/omap4470-common/omap4470-common-vendor.mk)
