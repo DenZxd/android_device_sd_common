@@ -23,7 +23,7 @@ COMMON_FOLDER := device/sd/sd-common
 BOARD_VENDOR := sd
 
 # Setup custom omap4xxx defines
-#BOARD_USE_CUSTOM_LIBION := true
+# BOARD_USE_CUSTOM_LIBION := true
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := $(DEVICE_FOLDER)/kernel
@@ -91,7 +91,7 @@ PRODUCT_PACKAGES += \
     ti_wfd_libs \
     dhcpcd.conf \
     lib_driver_cmd_wl12xx \
-    TQS_D_1.7.ini \
+#   TQS_D_1.7.ini \
     calibrator \
     hostapd.conf \
     
@@ -112,11 +112,11 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     audio.a2dp.default \
     audio.usb.default \
-    audio.hdmi.omap4 \
+#   audio.hdmi.omap4 \
     audio.r_submix.default \
-    audio.primary.omap4 \
-    camera.omap4 \
-    gps.omap4 \
+#   audio.primary.omap4 \
+#   camera.omap4 \
+#   gps.omap4 \
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -133,8 +133,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Email \
 
-PRODUCT_PACKAGES += \
-    hwcomposer.default \
+# PRODUCT_PACKAGES += \
+#   hwcomposer.default \
 
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 # BT
@@ -158,7 +158,7 @@ PRODUCT_COPY_FILES += \
     $(COMMON_FOLDER)/prebuilt/usr/keylayout/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl \
 
 # USB Host app switcher
-PRODUCT_PACKAGES += USBHostSwitcher
+# PRODUCT_PACKAGES += USBHostSwitcher
 
 # TI OMAP4
 PRODUCT_PACKAGES += \
@@ -175,7 +175,7 @@ PRODUCT_PACKAGES += \
     libI420colorconvert \
     libtiutils_custom \
     libcamera \
-    libion_ti \
+#   libion_ti \
     libomxcameraadapter \
     smc_pa_ctrl \
     tf_daemon \
@@ -188,13 +188,13 @@ PRODUCT_PACKAGES += \
     CMStats \
 
 # Hardware HALs
-PRODUCT_PACKAGES += \
-    lights.$(TARGET_BOOTLOADER_BOARD_NAME) \
-    power.$(TARGET_BOOTLOADER_BOARD_NAME) \
-    audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME) \
-    sensors.$(TARGET_BOOTLOADER_BOARD_NAME) \
-    audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#    hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
+# PRODUCT_PACKAGES += \
+#   lights.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#   power.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#   audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#   sensors.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#   audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#   hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
     
 # Clears the boot counter, update mac address on first start
 PRODUCT_COPY_FILES += \
@@ -220,21 +220,21 @@ PRODUCT_PACKAGES += uim-sysfs \
         libbt-vendor \
 
 #copy firmware
-PRODUCT_COPY_FILES += \
-  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_10.6.15.bts:system/etc/firmware/TIInit_10.6.15.bts \
-  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.2.31.bts:system/etc/firmware/TIInit_7.2.31.bts \
-  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.6.15.bts:system/etc/firmware/TIInit_7.6.15.bts \
-  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_12.7.27.bts:system/etc/firmware/TIInit_12.7.27.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_ch8_1283.2.bts:system/etc/firmware/fmc_ch8_1283.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_ch8_1283.2.bts:system/etc/firmware/fm_rx_ch8_1283.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1283.2.bts:system/etc/firmware/fm_tx_ch8_1283.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_init_1273.2.bts:system/etc/firmware/fmc_init_1273.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_init_1273.2.bts:system/etc/firmware/fm_rx_init_1273.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_init_1273.2.bts:system/etc/firmware/fm_tx_init_1273.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.1.bts:system/etc/firmware/fm_tx_ch8_1273.1.bts \
-  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts \
-  device/ti/proprietary-open/wl12xx/wpan/nfc/TIInit_11.7.27.bts:system/etc/firmware/TIInit_11.7.27.bts \
-  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.72.bts:system/etc/firmware/TINfcInit_12.8.32.72.bts \
-  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.80.bts:system/etc/firmware/TINfcInit_12.8.32.80.bts \
+# PRODUCT_COPY_FILES += \
+#  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_10.6.15.bts:system/etc/firmware/TIInit_10.6.15.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.2.31.bts:system/etc/firmware/TIInit_7.2.31.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_7.6.15.bts:system/etc/firmware/TIInit_7.6.15.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/bluetooth/TIInit_12.7.27.bts:system/etc/firmware/TIInit_12.7.27.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_ch8_1283.2.bts:system/etc/firmware/fmc_ch8_1283.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_ch8_1283.2.bts:system/etc/firmware/fm_rx_ch8_1283.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1283.2.bts:system/etc/firmware/fm_tx_ch8_1283.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fmc_init_1273.2.bts:system/etc/firmware/fmc_init_1273.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_rx_init_1273.2.bts:system/etc/firmware/fm_rx_init_1273.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_init_1273.2.bts:system/etc/firmware/fm_tx_init_1273.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.1.bts:system/etc/firmware/fm_tx_ch8_1273.1.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/fmradio/fm_tx_ch8_1273.2.bts:system/etc/firmware/fm_tx_ch8_1273.2.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/nfc/TIInit_11.7.27.bts:system/etc/firmware/TIInit_11.7.27.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.72.bts:system/etc/firmware/TINfcInit_12.8.32.72.bts \
+#  device/ti/proprietary-open/wl12xx/wpan/nfc/TINfcInit_12.8.32.80.bts:system/etc/firmware/TINfcInit_12.8.32.80.bts \
 
-$(call inherit-product-if-exists, vendor/sd/omap4470-common/omap4470-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/sd/sqsgx-common/sqsgx-common-vendor.mk)

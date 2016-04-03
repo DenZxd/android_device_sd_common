@@ -14,7 +14,7 @@
 COMMON_FOLDER := device/sd/sd-common
 
 # inherit from the proprietary version
--include vendor/sd/omap4470-common/BoardConfigVendor.mk
+-include vendor/sd/sqsgx-common/BoardConfigVendor.mk
 
 # set to allow building from omap4-common
 BOARD_VENDOR := sd
@@ -40,7 +40,7 @@ BOARD_USES_GENERIC_AUDIO := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_FOLDER)/bluetooth
 
 # Setup custom omap4xxx defines
-BOARD_USE_CUSTOM_LIBION := true
+# BOARD_USE_CUSTOM_LIBION := true
 
 # TI Enhancement Settings (Part 1)
 OMAP_ENHANCEMENT := true
@@ -94,9 +94,9 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 #BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 #TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
-ifndef BOARD_EGL_CFG
-BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
-endif
+# ifndef BOARD_EGL_CFG
+# BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
+# endif
 
 # Custom DOMX
 TI_CUSTOM_DOMX_PATH := $(COMMON_FOLDER)/domx
