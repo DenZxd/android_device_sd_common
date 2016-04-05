@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VENDOR=sd
-DEVICE=omap4470-common
+DEVICE=sqsgx-common
 
 BASE=../../../vendor/$VENDOR/$DEVICE/proprietary
 

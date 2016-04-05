@@ -1,7 +1,7 @@
 #!/bin/sh
 
 VENDOR=sd
-DEVICE=omap4470-common
+DEVICE=sqsgx-common
 OUTDIR=vendor/$VENDOR/$DEVICE
 MAKEFILE=../../../$OUTDIR/$DEVICE-vendor-blobs.mk
 
