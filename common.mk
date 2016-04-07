@@ -91,7 +91,7 @@ PRODUCT_PACKAGES += \
     ti_wfd_libs \
     dhcpcd.conf \
     lib_driver_cmd_wl12xx \
-#   TQS_D_1.7.ini \
+#   TQS_D_1.7.ini 
     calibrator \
     hostapd.conf \
     
@@ -112,7 +112,7 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     audio.a2dp.default \
     audio.usb.default \
-#   audio.hdmi.omap4 \
+#   audio.hdmi.omap4 
     audio.r_submix.default \
 #   audio.primary.omap4 \
 #   camera.omap4 \
@@ -175,7 +175,7 @@ PRODUCT_PACKAGES += \
     libI420colorconvert \
     libtiutils_custom \
     libcamera \
-#   libion_ti \
+#   libion_ti 
     libomxcameraadapter \
     smc_pa_ctrl \
     tf_daemon \
