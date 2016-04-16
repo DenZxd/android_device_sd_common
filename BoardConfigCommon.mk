@@ -12,11 +12,12 @@
 # limitations under the License.
 
 COMMON_FOLDER := device/sd/sd-common
+TARGET_BOARD_OMAP_CPU := 4470
 
 # inherit from the proprietary version
 -include vendor/sd/sqsgx-common/BoardConfigVendor.mk
 
-# set to allow building from omap4-common
+# set to allow building from sd-common
 BOARD_VENDOR := sd
 
 PRODUCT_VENDOR_KERNEL_HEADERS := $(COMMON_FOLDER)/kernel-headers
@@ -27,7 +28,6 @@ USE_CAMERA_STUB := true
 BOARD_HAVE_FAKE_GPS := false
 
 BOARD_HAVE_FM_RADIO := true
-BOARD_HAVE_BLUETOOTH := true
 BOARD_WPAN_DEVICE := true
 BOARD_VENDOR_TI_GPS_HARDWARE := omap4
 BOARD_GPS_LIBRARIES := libgps
@@ -37,17 +37,19 @@ BOARD_GPS_LIBRARIES := libgps
 BOARD_USES_GENERIC_AUDIO := true
 
 # Bluetooth
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_FOLDER)/bluetooth
+# BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_FOLDER)/bluetooth
+BOARD_HAVE_BLUETOOTH_TI := true
+BOARD_HAVE_BLUETOOTH := true
 
 # Setup custom omap4xxx defines
 # BOARD_USE_CUSTOM_LIBION := true
 
 # TI Enhancement Settings (Part 1)
 OMAP_ENHANCEMENT := true
-#OMAP_ENHANCEMENT_BURST_CAPTURE := true
-#OMAP_ENHANCEMENT_S3D := true
-#OMAP_ENHANCEMENT_CPCAM := true
-#OMAP_ENHANCEMENT_VTC := true
+# OMAP_ENHANCEMENT_BURST_CAPTURE := true
+# OMAP_ENHANCEMENT_S3D := true
+# OMAP_ENHANCEMENT_CPCAM := true
+# OMAP_ENHANCEMENT_VTC := true
 OMAP_ENHANCEMENT_MULTIGPU := true
 BOARD_USE_TI_ENHANCED_DOMX := true
 
@@ -96,9 +98,10 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 #BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 #TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
-# ifndef BOARD_EGL_CFG
-# BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
-# endif
+take out from blobs
+ifndef BOARD_EGL_CFG
+BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
+endif
 
 # Custom DOMX
 TI_CUSTOM_DOMX_PATH := $(COMMON_FOLDER)/domx
@@ -114,7 +117,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.hwui.disable_scissor_opt=true
 # Graphics
 USE_OPENGL_RENDERER := true
 # set if the target supports FBIO_WAITFORVSYNC
-TARGET_HAS_WAITFORVSYNC := true
+# TARGET_HAS_WAITFORVSYNC := true
 
 #TARGET_RECOVERY_PRE_COMMAND := "echo 'recovery' > /bootdata/BCB; sync"
 
@@ -124,7 +127,7 @@ ifdef BOARD_USE_TI_ENHANCED_DOMX
     COMMON_GLOBAL_CFLAGS += -DENHANCED_DOMX
     ENHANCED_DOMX := true
 else
-    DOMX_PATH := hardware/ti/omap4xxx/domx
+     DOMX_PATH := hardware/ti/omap4xxx/domx
 endif
 
 ifdef OMAP_ENHANCEMENT

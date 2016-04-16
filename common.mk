@@ -19,7 +19,7 @@
 
 COMMON_FOLDER := device/sd/sd-common
 
-# set to allow building from omap4-common
+# set to allow building from sd-common
 BOARD_VENDOR := sd
 
 # Setup custom omap4xxx defines
@@ -91,7 +91,6 @@ PRODUCT_PACKAGES += \
     ti_wfd_libs \
     dhcpcd.conf \
     lib_driver_cmd_wl12xx \
-#   TQS_D_1.7.ini 
     calibrator \
     hostapd.conf \
     
@@ -111,12 +110,8 @@ PRODUCT_PACKAGES += \
     tinycap \
     audio_policy.default \
     audio.a2dp.default \
-    audio.usb.default \
-#   audio.hdmi.omap4 
-    audio.r_submix.default \
-#   audio.primary.omap4 \
-#   camera.omap4 \
-#   gps.omap4 \
+    audio.primary.default \
+    audio.r_submix.default
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -130,11 +125,11 @@ PRODUCT_PACKAGES += \
     sh \
 
 # Extra apps (not always included by AOSP)
-PRODUCT_PACKAGES += \
-    Email \
+# PRODUCT_PACKAGES += \
+#    Email \
 
 # PRODUCT_PACKAGES += \
-#   hwcomposer.default \
+#  hwcomposer.default \
 
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 # BT
@@ -175,7 +170,7 @@ PRODUCT_PACKAGES += \
     libI420colorconvert \
     libtiutils_custom \
     libcamera \
-#   libion_ti 
+    libion_ti \
     libomxcameraadapter \
     smc_pa_ctrl \
     tf_daemon \
