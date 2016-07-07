@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#define LOG_NDEBUG 0
 #include <hardware/sensors.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -29,7 +28,8 @@
 #include <cutils/log.h>
 
 #include "nusensors.h"
-#include "Kxtf9.h"
+#include "BMA250.h"
+#include "STK-ALS22x7.h"
 /*****************************************************************************/
 
 struct sensors_poll_context_t {
@@ -43,7 +43,8 @@ struct sensors_poll_context_t {
 
 private:
     enum {
-        kxtf9           = 0,
+        bma250   = 0,
+        als22x7  = 1,
         numSensorDrivers,
         numFds,
     };
@@ -57,7 +58,9 @@ private:
     int handleToDriver(int handle) const {
         switch (handle) {
             case ID_A:
-            	return kxtf9;
+            	return bma250;
+            case ID_B:
+            	return als22x7;
         }
         return -EINVAL;
     }
@@ -67,10 +70,15 @@ private:
 
 sensors_poll_context_t::sensors_poll_context_t()
 {
-    mSensors[kxtf9] = new Kxtf9Sensor();
-    mPollFds[kxtf9].fd = mSensors[kxtf9]->getFd();
-    mPollFds[kxtf9].events = POLLIN;
-    mPollFds[kxtf9].revents = 0;
+    mSensors[bma250] = new BMA250Sensor();
+    mPollFds[bma250].fd = mSensors[bma250]->getFd();
+    mPollFds[bma250].events = POLLIN;
+    mPollFds[bma250].revents = 0;
+
+    mSensors[als22x7] = new STK_ALS22x7Sensor();
+    mPollFds[als22x7].fd = mSensors[als22x7]->getFd();
+    mPollFds[als22x7].events = POLLIN;
+    mPollFds[als22x7].revents = 0;
 
     int wakeFds[2];
     int result = pipe(wakeFds);

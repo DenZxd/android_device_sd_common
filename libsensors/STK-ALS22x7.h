@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2011 Sorin P. <sorin@hypermagik.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#ifndef ANDROID_KXTF9_SENSOR_H
-#define ANDROID_KXTF9_SENSOR_H
+ 
+#ifndef ANDROID_STK_ALS22x7_SENSOR_H
+#define ANDROID_STK_ALS22x7_SENSOR_H
 
 #include <stdint.h>
 #include <errno.h>
@@ -27,31 +28,25 @@
 #include "SensorBase.h"
 #include "InputEventReader.h"
 
-#define KXTF9_ENABLE_FILE "/sys/bus/i2c/drivers/kxtf9/1-000e/enable"
-#define KXTF9_DELAY_FILE  "/sys/bus/i2c/drivers/kxtf9/1-000e/delay"
-
-/*****************************************************************************/
+#define STK_ALS22X7_ENABLE_FILE "/sys/bus/i2c/devices/4-0010/enable"
 
 struct input_event;
 
-class Kxtf9Sensor : public SensorBase {
+class STK_ALS22x7Sensor : public SensorBase {
 public:
-            Kxtf9Sensor();
-    virtual ~Kxtf9Sensor();
+    STK_ALS22x7Sensor();
+    virtual ~STK_ALS22x7Sensor();
 
-    virtual int setDelay(int32_t handle, int64_t ns);
     virtual int enable(int32_t handle, int enabled);
     virtual int readEvents(sensors_event_t* data, int count);
     void processEvent(int code, int value);
 
-private:
-    uint32_t mEnabled;
+protected:
+    int mEnabled;
     InputEventCircularReader mInputReader;
     sensors_event_t mPendingEvent;
 
     int isEnabled();
 };
 
-/*****************************************************************************/
-
-#endif  // ANDROID_AKM_SENSOR_H
+#endif  // ANDROID_STK_ALS22x7_SENSOR_H

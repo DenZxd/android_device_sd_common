@@ -24,17 +24,23 @@
  * The SENSORS Module
  */
 
-/*
- * the AK8973 has a 8-bit ADC but the firmware seems to average 16 samples,
- * or at least makes its calibration on 12-bits values. This increases the
- * resolution by 4 bits.
- */
-
 static const struct sensor_t sSensorList[] = {
-        { "KXTF9 3-axis Accelerometer",
-                "Kionix",
-                1, SENSORS_HANDLE_BASE+ID_A,
-                SENSOR_TYPE_ACCELEROMETER, 8.0f*9.81f, (8.0f*9.81f)/2048.0f, 0.57f, 0, { } },
+        { "BMA250 3-axis Accelerometer",
+          "Bosch Sensortec GmbH",
+          1, SENSORS_HANDLE_BASE+ID_A,
+          SENSOR_TYPE_ACCELEROMETER,
+          (16.0f*GRAVITY_EARTH),
+          (16.0f*GRAVITY_EARTH)/4096,
+          0.003f,
+          0, { } },
+        { "SensorTek 22x7 Ambient Light Sensor",
+          "SensorTek",
+          1, SENSORS_HANDLE_BASE+ID_B,
+          SENSOR_TYPE_LIGHT,
+	  8192.0f,
+	  1.0f,
+	  0.5f,
+	  0, { } },
 };
 
 static int open_sensors(const struct hw_module_t* module, const char* name,
@@ -57,8 +63,8 @@ struct sensors_module_t HAL_MODULE_INFO_SYM = {
         .version_major = 1,
         .version_minor = 0,
         .id = SENSORS_HARDWARE_MODULE_ID,
-        .name = "Barnes and Noble Encore Sensors Module",
-        .author = "Austen Dicken",
+        .name = "Kindle Fire Sensors Module",
+        .author = "Hashcode/Austen Dicken",
         .methods = &sensors_module_methods,
     },
     .get_sensors_list = sensors__get_sensors_list

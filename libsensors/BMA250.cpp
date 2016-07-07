@@ -25,12 +25,14 @@
 
 #include <cutils/log.h>
 
-#include "Kxtf9.h"
+#include "BMA250.h"
+
+#define TAG "BMA250"
 
 /*****************************************************************************/
 
-Kxtf9Sensor::Kxtf9Sensor()
-: SensorBase(KXTF9_DEVICE_NAME, "kxtf9_accel"),
+BMA250Sensor::BMA250Sensor()
+: SensorBase(DEVICE_NAME, "bma250"),
       mEnabled(0),
       mInputReader(32)
 {
@@ -39,26 +41,26 @@ Kxtf9Sensor::Kxtf9Sensor()
     mPendingEvent.type = SENSOR_TYPE_ACCELEROMETER;
     memset(mPendingEvent.data, 0, sizeof(mPendingEvent.data));
     mPendingEvent.acceleration.status = SENSOR_STATUS_ACCURACY_HIGH;
-
     mEnabled = isEnabled();
 }
 
-Kxtf9Sensor::~Kxtf9Sensor() {
+BMA250Sensor::~BMA250Sensor() {
 }
 
-int Kxtf9Sensor::enable(int32_t handle, int en)
+int BMA250Sensor::enable(int32_t handle, int en)
 {
     int err = 0;
 
     int newState = en ? 1 : 0;
 
+    // ALOGD(TAG ": Setting enable: %d", en);
+
     // don't set enable state if it's already valid
-    if(mEnabled == newState) {
+    if (mEnabled == newState) {
         return err;
     }
 
-    // ok we need to set our enabled state
-    int fd = open(KXTF9_ENABLE_FILE, O_WRONLY);
+    int fd = open(BMA250_ENABLE_FILE, O_WRONLY);
     if(fd >= 0) {
         char buffer[20];
         int bytes = sprintf(buffer, "%d\n", newState);
@@ -69,19 +71,21 @@ int Kxtf9Sensor::enable(int32_t handle, int en)
         err = -errno;
     }
 
-    ALOGE_IF(err < 0, "Error setting enable of kxtf9 accelerometer (%s)", strerror(-err));
+    ALOGE_IF(err < 0, TAG ": Error setting enable of bma250 accelerometer (%s)", strerror(-err));
 
     if (!err) {
         mEnabled = newState;
-        setDelay(0, 40000000); // 40ms by default for faster re-orienting
+        setDelay(handle, 40000000); // 40ms by default for faster re-orienting
     }
 
     return err;
 }
 
-int Kxtf9Sensor::setDelay(int32_t handle, int64_t ns)
+int BMA250Sensor::setDelay(int32_t handle, int64_t ns)
 {
     int err = 0;
+
+    // ALOGD(TAG ": Setting delay: %lluns", ns);
 
     if (mEnabled) {
         if (ns < 0)
@@ -89,11 +93,10 @@ int Kxtf9Sensor::setDelay(int32_t handle, int64_t ns)
 
         unsigned long delay = ns / 1000000;
 
-        // ok we need to set our enabled state
-        int fd = open(KXTF9_DELAY_FILE, O_WRONLY);
+        int fd = open(BMA250_DELAY_FILE, O_WRONLY);
         if(fd >= 0) {
             char buffer[20];
-            int bytes = sprintf(buffer, "%d\n", delay);
+            int bytes = sprintf(buffer, "%lu\n", delay);
             err = write(fd, buffer, bytes);
             err = err < 0 ? -errno : 0;
             close(fd);
@@ -101,14 +104,16 @@ int Kxtf9Sensor::setDelay(int32_t handle, int64_t ns)
             err = -errno;
         }
 
-        ALOGE_IF(err < 0, "Error setting delay of kxtf9 accelerometer (%s)", strerror(-err));
+        ALOGE_IF(err < 0, TAG ": Error setting delay of bma250 accelerometer (%s)", strerror(-err));
     }
 
     return err;
 }
 
-int Kxtf9Sensor::readEvents(sensors_event_t* data, int count)
+int BMA250Sensor::readEvents(sensors_event_t* data, int count)
 {
+    // ALOGD(TAG ": readEvents: count == %d", count);
+
     if (count < 1)
         return -EINVAL;
 
@@ -120,17 +125,16 @@ int Kxtf9Sensor::readEvents(sensors_event_t* data, int count)
     input_event const* event;
 
     while (count && mInputReader.readEvent(&event)) {
-        int type = event->type;
-        if (type == EV_REL) {
+        // ALOGD(TAG ": event (type=%d, code=%d, value=%d)", event->type, event->code, event->value);
+        if ((event->type == EV_ABS) || (event->type == EV_REL)) {
             processEvent(event->code, event->value);
-        } else if (type == EV_SYN) {
+        } else if (event->type == EV_SYN) {
             mPendingEvent.timestamp = timevalToNano(event->time);
             *data++ = mPendingEvent;
             count--;
             numEventReceived++;
         } else {
-            ALOGE("Kxtf9: unknown event (type=%d, code=%d)",
-                    type, event->code);
+            ALOGE(TAG ": unknown event (type=%d, code=%d)", event->type, event->code);
         }
         mInputReader.next();
     }
@@ -138,36 +142,44 @@ int Kxtf9Sensor::readEvents(sensors_event_t* data, int count)
     return numEventReceived;
 }
 
-void Kxtf9Sensor::processEvent(int code, int value)
+void BMA250Sensor::processEvent(int code, int value)
 {
+/*
+		temp_x = acc->x;
+		acc->x = -acc->y;
+		acc->y = temp_x;
+		acc->z = acc->z;
+*/
     switch (code) {
         case EVENT_TYPE_ACCEL_X:
-            mPendingEvent.acceleration.x = -value * CONVERT_A_X;
+            mPendingEvent.acceleration.y = value * CONVERT_A_X;
             break;
         case EVENT_TYPE_ACCEL_Y:
-            mPendingEvent.acceleration.y = value * CONVERT_A_Y;
+            mPendingEvent.acceleration.x = -value * CONVERT_A_Y;
             break;
         case EVENT_TYPE_ACCEL_Z:
-            mPendingEvent.acceleration.z = -value * CONVERT_A_Z;
+            mPendingEvent.acceleration.z = value * CONVERT_A_Z;
             break;
     }
 }
 
-int Kxtf9Sensor::isEnabled()
+int BMA250Sensor::isEnabled()
 {
-    int fd = open(KXTF9_ENABLE_FILE, O_RDONLY);
+    int ret = 0;
+    int fd = open(BMA250_ENABLE_FILE, O_RDONLY);
     if (fd >= 0) {
         char buffer[20];
         int amt = read(fd, buffer, 20);
         close(fd);
         if(amt > 0) {
-            return (buffer[0] == '1');
+            ret = (buffer[0] == '1');
         } else {
-            ALOGE("Kxtf9: isEnable failed to read (%s)", strerror(errno));
-            return 0;
+            ALOGE(TAG ": isEnable failed to read (%s)", strerror(errno));
         }
     } else {
-        ALOGE("Kxtf9: isEnabled failed to open %s", KXTF9_ENABLE_FILE);
-        return 0;
+        ALOGE(TAG ": isEnabled failed to open %s", BMA250_ENABLE_FILE);
     }
+    // ALOGD(TAG ": isEnabled == %d", ret);
+    return ret;
 }
+

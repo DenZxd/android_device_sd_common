@@ -37,7 +37,8 @@ int init_nusensors(hw_module_t const* module, hw_device_t** device);
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
-#define ID_A  (0)
+#define ID_A	(0)
+#define ID_B	(1)
 
 /*****************************************************************************/
 
@@ -47,15 +48,15 @@ int init_nusensors(hw_module_t const* module, hw_device_t** device);
 
 /*****************************************************************************/
 
-#define KXTF9_DEVICE_NAME      "/dev"
+#define DEVICE_NAME      "/dev"
 
 #define EVENT_TYPE_ACCEL_X          ABS_X
 #define EVENT_TYPE_ACCEL_Y          ABS_Y
 #define EVENT_TYPE_ACCEL_Z          ABS_Z
 #define EVENT_TYPE_ACCEL_STATUS     ABS_WHEEL
 
-// 1000 LSG = 1G
-#define LSG                         (1000.0f)
+// 256LSG/G
+#define LSG                         (256.0f)
 
 
 // conversion of acceleration data to SI units (m/s^2)

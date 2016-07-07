@@ -21,9 +21,10 @@ COMMON_FOLDER := device/sd/sd-common
 
 # set to allow building from sd-common
 BOARD_VENDOR := sd
+TARGET_BOOTLOADER_BOARD_NAME := panda
 
 # Setup custom omap4xxx defines
-# BOARD_USE_CUSTOM_LIBION := true
+BOARD_USE_CUSTOM_LIBION := true
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := $(DEVICE_FOLDER)/kernel
@@ -67,6 +68,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=160 \
     ro.nf.profile=2 \
     ro.nf.level=512
+    ro.sf.hwrotation=270
 
 PRODUCT_CHARACTERISTICS := tablet
 
@@ -93,13 +95,15 @@ PRODUCT_PACKAGES += \
     lib_driver_cmd_wl12xx \
     calibrator \
     hostapd.conf \
+    crda \
+    regulatory.bin \
     
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     make_ext4fs \
     sdcard \
-    setup_fs \
+    setup_fs
 
 # Audio Support
 PRODUCT_PACKAGES += \
@@ -111,11 +115,11 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     audio.a2dp.default \
     audio.primary.default \
-    audio.r_submix.default
+    audio.r_submix.default \
 
 # DRM
-PRODUCT_PACKAGES += \
-    libwvm \
+# PRODUCT_PACKAGES += \
+#    libwvm \
 
 # Misc / Testing
 PRODUCT_PACKAGES += \
@@ -132,10 +136,11 @@ PRODUCT_PACKAGES += \
 #  hwcomposer.default \
 
 PRODUCT_AAPT_PREF_CONFIG := mdpi
+
 # BT
-PRODUCT_PACKAGES += \
-    uim-sysfs \
-    libbt-vendor
+#PRODUCT_PACKAGES += \
+#    uim-sysfs \
+#    libbt-vendor
 
 # Prebuilts /system/etc
 PRODUCT_COPY_FILES += \
@@ -160,22 +165,20 @@ PRODUCT_PACKAGES += \
     libdomx \
     libOMX_Core \
     libOMX.TI.DUCATI1.VIDEO.H264E \
-    libOMX.TI.DUCATI1.VIDEO.H264SVCE \
-    libOMX.TI.DUCATI1.VIDEO.VC1E \
     libOMX.TI.DUCATI1.VIDEO.MPEG4E \
     libOMX.TI.DUCATI1.VIDEO.DECODER \
     libOMX.TI.DUCATI1.VIDEO.DECODER.secure \
+    libOMX.TI.DUCATI1.VIDEO.CAMERA \
     libOMX.TI.DUCATI1.MISC.SAMPLE \
     libstagefrighthw \
     libI420colorconvert \
-    libtiutils_custom \
+    libtiutils \
     libcamera \
     libion_ti \
     libomxcameraadapter \
     smc_pa_ctrl \
     tf_daemon \
-    libtf_crypto_sst \
-    libOMX.TI.DUCATI1.VIDEO.CAMERA \
+    libtf_crypto_sst
 
 # Standard CM stuff.
 PRODUCT_PACKAGES += \
@@ -183,18 +186,18 @@ PRODUCT_PACKAGES += \
     CMStats \
 
 # Hardware HALs
-# PRODUCT_PACKAGES += \
-#   lights.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#   power.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#   audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#   sensors.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#   audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME) \
-#   hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
+PRODUCT_PACKAGES += \
+    lights.panda \
+    power.panda \
+    sensors.panda
     
+# audio.hdmi.$(TARGET_BOOTLOADER_BOARD_NAME) \
+# hwcomposer.$(TARGET_BOOTLOADER_BOARD_NAME) \
+# audio.primary.$(TARGET_BOOTLOADER_BOARD_NAME) \
+#    
 # Clears the boot counter, update mac address on first start
 PRODUCT_COPY_FILES += \
-        $(COMMON_FOLDER)/prebuilt/bin/clear_bootcnt.sh:/system/bin/clear_bootcnt.sh \
-	$(COMMON_FOLDER)/prebuilt/bin/fix-mac.sh:/system/bin/fix-mac.sh
+    $(COMMON_FOLDER)/prebuilt/bin/fix-mac.sh:/system/bin/fix-mac.sh \
 
 # Art
 PRODUCT_COPY_FILES += \

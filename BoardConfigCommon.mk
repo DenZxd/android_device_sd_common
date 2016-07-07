@@ -19,11 +19,14 @@ TARGET_BOARD_OMAP_CPU := 4470
 
 # set to allow building from sd-common
 BOARD_VENDOR := sd
+TARGET_NO_BOOTLOADER := true
+TARGET_BOOTLOADER_BOARD_NAME := panda
 
 PRODUCT_VENDOR_KERNEL_HEADERS := $(COMMON_FOLDER)/kernel-headers
 
 TARGET_SPECIFIC_HEADER_PATH := $(COMMON_FOLDER)/include
 
+TI_OMAP4_CAMERAHAL_VARIANT := false
 USE_CAMERA_STUB := true
 BOARD_HAVE_FAKE_GPS := false
 
@@ -37,12 +40,14 @@ BOARD_GPS_LIBRARIES := libgps
 BOARD_USES_GENERIC_AUDIO := true
 
 # Bluetooth
-# BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_FOLDER)/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(COMMON_FOLDER)/bluetooth
 BOARD_HAVE_BLUETOOTH_TI := true
 BOARD_HAVE_BLUETOOTH := true
 
+BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
+
 # Setup custom omap4xxx defines
-# BOARD_USE_CUSTOM_LIBION := true
+BOARD_USE_CUSTOM_LIBION := true
 
 # TI Enhancement Settings (Part 1)
 OMAP_ENHANCEMENT := true
@@ -66,17 +71,19 @@ TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 
 # Wifi
 USES_TI_MAC80211 := true
-BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+ifdef USES_TI_MAC80211
 WPA_SUPPLICANT_VERSION           := VER_0_8_X_TI
+BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wl12xx
 BOARD_HOSTAPD_DRIVER             := NL80211
-PRODUCT_WIRELESS_TOOLS           := true
+BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_wl12xx
 BOARD_WLAN_DEVICE                := wl12xx_mac80211
 BOARD_SOFTAP_DEVICE              := wl12xx_mac80211
 WIFI_DRIVER_MODULE_PATH          := "/system/lib/modules/wl12xx_sdio.ko"
 WIFI_DRIVER_MODULE_NAME          := "wl12xx_sdio"
 WIFI_FIRMWARE_LOADER             := ""
-COMMON_GLOBAL_CFLAGS		 += -DUSES_TI_MAC80211
-
+PRODUCT_WIRELESS_TOOLS           := true
+COMMON_GLOBAL_CFLAGS += -DUSES_TI_MAC80211
 
 # Kernel
 BOARD_KERNEL_BASE := 0x81000040
@@ -98,11 +105,6 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 #BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
 #TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/virtual/android_usb/android0/f_mass_storage/lun%d/file"
 
-take out from blobs
-ifndef BOARD_EGL_CFG
-BOARD_EGL_CFG := $(COMMON_FOLDER)/prebuilt/etc/egl.cfg
-endif
-
 # Custom DOMX
 TI_CUSTOM_DOMX_PATH := $(COMMON_FOLDER)/domx
 DOMX_PATH := $(COMMON_FOLDER)/domx
@@ -117,7 +119,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.hwui.disable_scissor_opt=true
 # Graphics
 USE_OPENGL_RENDERER := true
 # set if the target supports FBIO_WAITFORVSYNC
-# TARGET_HAS_WAITFORVSYNC := true
+TARGET_HAS_WAITFORVSYNC := true
 
 #TARGET_RECOVERY_PRE_COMMAND := "echo 'recovery' > /bootdata/BCB; sync"
 
@@ -127,7 +129,7 @@ ifdef BOARD_USE_TI_ENHANCED_DOMX
     COMMON_GLOBAL_CFLAGS += -DENHANCED_DOMX
     ENHANCED_DOMX := true
 else
-     DOMX_PATH := hardware/ti/omap4xxx/domx
+    DOMX_PATH := hardware/ti/omap4xxx/domx
 endif
 
 ifdef OMAP_ENHANCEMENT
