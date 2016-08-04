@@ -17,12 +17,12 @@
 #
 # Everything in this directory will become public
 
-COMMON_FOLDER := device/bn/common
+COMMON_FOLDER := device/sd/sd-common
 
 $(call inherit-product-if-exists, hardware/ti/omap4/omap4.mk)
 
 # set to allow building from omap4-common
-BOARD_VENDOR := bn
+BOARD_VENDOR := sd
 
 # add common overlays
 DEVICE_PACKAGE_OVERLAYS += $(COMMON_FOLDER)/overlay/aosp
@@ -70,7 +70,7 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.crypto.state=unencrypted \
     persist.sys.usb.config=mtp,adb \
     persist.sys.root_access=3 \
-    ro.sf.lcd_density=240 \
+    ro.sf.lcd_density=160 \
     ro.nf.profile=2 \
     ro.nf.level=512 \
     ro.bq.gpu_to_cpu_unsupported=1 \
@@ -155,7 +155,7 @@ PRODUCT_COPY_FILES += \
 
 # Input
 PRODUCT_COPY_FILES += \
-    $(COMMON_FOLDER)/prebuilt/usr/idc/ft5x06-i2c.idc:system/usr/idc/ft5x06-i2c.idc \
+    $(COMMON_FOLDER)/prebuilt/usr/idc/ft5x0x_ts.idc:system/usr/idc/ft5x0x_ts.idc \
     $(COMMON_FOLDER)/prebuilt/usr/keylayout/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
 
 

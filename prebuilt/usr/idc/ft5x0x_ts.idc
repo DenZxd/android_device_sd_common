@@ -18,9 +18,18 @@
 
 touch.deviceType = touchScreen
 touch.orientationAware = 1
+touch.surfaceWidth = 1024px
+touch.surfaceHeight = 600px
 
-keyboard.layout = qwerty
-keyboard.characterMap = qwerty
+touch.orientation.calibration = none
+touch.size.calibration = geometric
+touch.pressure.calibration = amplitude
+touch.pressure.source = default
+touch.pressure.scale = 0.01
+
+touch.touchSize.calibration = pressure
+
+keyboard.layout = gpio-keys
 keyboard.orientationAware = 1
 keyboard.builtIn = 1
 

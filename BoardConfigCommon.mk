@@ -11,17 +11,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COMMON_FOLDER := device/bn/common
+COMMON_FOLDER := device/sd/sd-common
 TARGET_BOARD_OMAP_CPU := 4470
 
 # inherit from the proprietary version
--include vendor/bn/omap4470-common/BoardConfigVendor.mk
+-include vendor/sd/omap4470-common/BoardConfigVendor.mk
 
 # inherit from omap4
 -include hardware/ti/omap4/BoardConfigCommon.mk
 
 # set to allow building from omap4-common
-BOARD_VENDOR := bn
+BOARD_VENDOR := sd
 
 USE_CAMERA_STUB := true
 BOARD_HAVE_FAKE_GPS := true
@@ -79,21 +79,23 @@ endif
 
 
 # Kernel
-BOARD_KERNEL_BASE := 0x80000000
+BOARD_KERNEL_BASE := 0x81000040
 TARGET_NO_RADIOIMAGE := true
 TARGET_NO_BOOTLOADER := true
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_SOURCE := kernel/bn/omap
-TARGET_KERNEL_CONFIG := android_omap4_defconfig
+TARGET_KERNEL_SOURCE := kernel/sd/x7
+TARGET_KERNEL_CONFIG := panda_X72_defconfig
 TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 
 # Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
-BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 15728640
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 704643072
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 13824409600
-BOARD_CACHEIMAGE_PARTITION_SIZE := 486539264
+# BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608
+# Real partition device size, but for full img build changed to next string
+# BOARD_SYSTEMIMAGE_PARTITION_SIZE := 268435456
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 641728512
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 536870912
+BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_VOLD_MAX_PARTITIONS := 32
 BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
@@ -129,7 +131,7 @@ TARGET_NO_SEPARATE_RECOVERY := true
 
 # SELinux stuff
 BOARD_SEPOLICY_DIRS += \
-    device/bn/common/sepolicy
+    device/sd/sd-common/sepolicy
 
 BOARD_SEPOLICY_UNION += \
     bluetooth.te \
@@ -164,7 +166,7 @@ TW_EXTERNAL_STORAGE_MOUNT_POINT := "sdcard"
 TW_DEFAULT_EXTERNAL_STORAGE := true
 TW_BRIGHTNESS_PATH := /sys/class/backlight/lcd-backlight/brightness
 TW_MAX_BRIGHTNESS := 254
-TW_CUSTOM_BATTERY_PATH := /sys/class/power_supply/bq27500-0
+TW_CUSTOM_BATTERY_PATH := /sys/class/power_supply/bq27410-battery
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 ifneq (,$(strip $(wildcard bootable/recovery-twrp/twrp.cpp)))
